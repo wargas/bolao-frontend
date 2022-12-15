@@ -1,13 +1,22 @@
 import { useFormik } from 'formik'
+import { useEffect } from 'react'
 import Loading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useLocalStorage } from 'usehooks-ts'
 import Api from '../libs/api'
+import { useAppSore } from '../stores/app-store'
 
 export default function LoginPage() {
   const navigate = useNavigate()
   const [token, setToken] = useLocalStorage('auth_token', '')
+  const removeUser = useAppSore(s => s.removeUser)
+
+  useEffect(() => {
+    removeUser()
+    setToken("")
+  }, [])
+  
 
   const { handleSubmit, getFieldProps, isSubmitting } = useFormik({
     initialValues: {

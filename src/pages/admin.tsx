@@ -19,18 +19,6 @@ export default function AdminPage() {
     if (!token) {
       navigate('/auth/login')
     } else {
-      Api.interceptors.request.use(
-        (config) => {
-          config.headers = {
-            Authorization: `Bearer ${token}`,
-          }
-
-          return config
-        },
-        (error) => {
-          return Error(error)
-        },
-      )
 
       Api.get('/me')
         .then(({ data }) => {
